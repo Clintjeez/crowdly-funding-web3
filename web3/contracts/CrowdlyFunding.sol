@@ -41,7 +41,9 @@ contract CrowdlyFunding {
         uint256 amount = msg.value;
 
         Campaign storage campaign = campaigns[_id];
-        Campaign.donations.push(amount);
+
+        campaign.donators.push(msg.sender);
+        campaign.donations.push(amount);
         (bool sent,) = payable(campaign.owner).call{value: amount}("");
 
         if(sent){
